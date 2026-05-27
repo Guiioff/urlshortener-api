@@ -1,0 +1,31 @@
+package com.devgui.urlshortener.domain.service;
+
+import com.devgui.urlshortener.domain.model.ShortUrl;
+import com.devgui.urlshortener.infrastructure.repository.ShortUrlRepository;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ShortUrlService {
+
+    private final ShortUrlRepository shortUrlRepository;
+
+    public ShortUrlService(ShortUrlRepository shortUrlRepository) {
+        this.shortUrlRepository = shortUrlRepository;
+    }
+
+    public ShortUrl shorten(ShortUrl shortUrl) {
+        String shortKey;
+        do {
+            shortKey = RandomStringUtils.secure().nextAlphanumeric(5, 10);
+        } while (shortUrlRepository.existsByShortKey(shortKey));
+
+        ShortUrl urlToSave = shortUrl.withShortKey(shortKey);
+        return shortUrlRepository.save(urlToSave);
+    }
+
+    public ShortUrl getByShortKey(String shortKey){
+        return shortUrlRepository.findByShortKey(shortKey)
+                .orElseThrow(() -> new RuntimeException("Short URL não encontrada com a shortKey " + shortKey));
+    }
+}

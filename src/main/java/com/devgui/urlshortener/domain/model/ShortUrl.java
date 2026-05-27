@@ -39,4 +39,8 @@ public class ShortUrl {
         this.shortKey = shortKey;
         this.expiresAt = expiresAt;
     }
+
+    public ShortUrl withShortKey(String shortKey) {
+        return new ShortUrl(this.originalUrl, shortKey, this.expiresAt);
+    }
 }
