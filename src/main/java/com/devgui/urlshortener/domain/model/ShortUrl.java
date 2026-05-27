@@ -40,6 +40,11 @@ public class ShortUrl {
         this.expiresAt = expiresAt;
     }
 
+    public ShortUrl(String originalUrl, Instant expiresAt) {
+        this.originalUrl = originalUrl;
+        this.expiresAt = expiresAt;
+    }
+
     public ShortUrl withShortKey(String shortKey) {
         return new ShortUrl(this.originalUrl, shortKey, this.expiresAt);
     }
