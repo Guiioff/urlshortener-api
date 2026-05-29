@@ -1,5 +1,6 @@
 package com.devgui.urlshortener.domain.service;
 
+import com.devgui.urlshortener.domain.exception.ShortUrlNotFoundException;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.infrastructure.repository.ShortUrlRepository;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,6 +27,6 @@ public class ShortUrlService {
 
     public ShortUrl getByShortKey(String shortKey){
         return shortUrlRepository.findByShortKey(shortKey)
-                .orElseThrow(() -> new RuntimeException("Short URL não encontrada com a shortKey " + shortKey));
+                .orElseThrow(() -> new ShortUrlNotFoundException("Short URL not found for key: " + shortKey));
     }
 }
