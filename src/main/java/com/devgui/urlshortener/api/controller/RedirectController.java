@@ -23,7 +23,7 @@ public class RedirectController {
 
     @GetMapping("/{shortKey}")
     public ResponseEntity<Void> redirect(@PathVariable String shortKey){
-        ShortUrl shortUrl = shortUrlService.getByShortKey(shortKey);
+        ShortUrl shortUrl = shortUrlService.incrementClicks(shortKey);
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(shortUrl.getOriginalUrl()))

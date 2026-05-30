@@ -25,7 +25,14 @@ public class ShortUrlService {
         return shortUrlRepository.save(urlToSave);
     }
 
-    public ShortUrl getByShortKey(String shortKey){
+    public ShortUrl incrementClicks(String shortKey){
+        ShortUrl shortUrl = this.getByShortKey(shortKey);
+        ShortUrl updatedUrl = shortUrl.incrementClickCount();
+
+        return shortUrlRepository.save(updatedUrl);
+    }
+
+    private ShortUrl getByShortKey(String shortKey){
         return shortUrlRepository.findByShortKey(shortKey)
                 .orElseThrow(() -> new ShortUrlNotFoundException("Short URL not found for key: " + shortKey));
     }

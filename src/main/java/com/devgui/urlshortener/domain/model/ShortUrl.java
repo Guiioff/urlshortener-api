@@ -2,6 +2,7 @@ package com.devgui.urlshortener.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Table(name = "short_urls")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShortUrl {
 
@@ -62,5 +64,18 @@ public class ShortUrl {
 
     public ShortUrl withShortKey(String shortKey) {
         return new ShortUrl(this.originalUrl, shortKey, this.expiresAt, this.clickCount, this.active);
+    }
+
+    public ShortUrl incrementClickCount() {
+        return new ShortUrl(
+                this.id,
+                this.originalUrl,
+                this.shortKey,
+                this.clickCount + 1,
+                this.active,
+                this.createdAt,
+                this.updatedAt,
+                this.expiresAt
+        );
     }
 }
