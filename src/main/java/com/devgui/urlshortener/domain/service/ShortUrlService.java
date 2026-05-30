@@ -1,5 +1,6 @@
 package com.devgui.urlshortener.domain.service;
 
+import com.devgui.urlshortener.domain.exception.ShortUrlInactiveException;
 import com.devgui.urlshortener.domain.exception.ShortUrlNotFoundException;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.infrastructure.repository.ShortUrlRepository;
@@ -27,8 +28,12 @@ public class ShortUrlService {
 
     public ShortUrl incrementClicks(String shortKey){
         ShortUrl shortUrl = this.getByShortKey(shortKey);
-        ShortUrl updatedUrl = shortUrl.incrementClickCount();
 
+        if (!shortUrl.isActive()) {
+            throw new ShortUrlInactiveException("This short URL is inactive.");
+        }
+
+        ShortUrl updatedUrl = shortUrl.incrementClickCount();
         return shortUrlRepository.save(updatedUrl);
     }
 

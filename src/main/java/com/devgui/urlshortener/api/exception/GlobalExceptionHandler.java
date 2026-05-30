@@ -1,5 +1,6 @@
 package com.devgui.urlshortener.api.exception;
 
+import com.devgui.urlshortener.domain.exception.ShortUrlInactiveException;
 import com.devgui.urlshortener.domain.exception.ShortUrlNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ShortUrlNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleShortUrlNotFoundException(ShortUrlNotFoundException e, HttpServletRequest request){
+        ErrorResponse error = ErrorResponse.of(
+                HttpStatus.NOT_FOUND, e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ShortUrlInactiveException.class)
+    public ResponseEntity<ErrorResponse> handleShortUrlInactiveException(ShortUrlInactiveException e, HttpServletRequest request){
         ErrorResponse error = ErrorResponse.of(
                 HttpStatus.NOT_FOUND, e.getMessage(), request.getRequestURI());
 
