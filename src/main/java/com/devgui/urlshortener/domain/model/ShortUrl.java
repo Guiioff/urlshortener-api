@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
@@ -27,25 +28,39 @@ public class ShortUrl {
     @Column(name = "short_key", length = 20, nullable = false, unique = true)
     private String shortKey;
 
+    @Column(name = "click_count", nullable = false)
+    private Integer clickCount;
+
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
+
     @Column(name = "expires_at")
     private Instant expiresAt;
 
-    public ShortUrl(String originalUrl, String shortKey, Instant expiresAt) {
+    public ShortUrl(String originalUrl, String shortKey, Instant expiresAt, Integer clickCount, boolean active) {
         this.originalUrl = originalUrl;
         this.shortKey = shortKey;
         this.expiresAt = expiresAt;
+        this.clickCount = clickCount;
+        this.active = active;
     }
 
     public ShortUrl(String originalUrl, Instant expiresAt) {
         this.originalUrl = originalUrl;
         this.expiresAt = expiresAt;
+        this.clickCount = 0;
+        this.active = true;
     }
 
     public ShortUrl withShortKey(String shortKey) {
-        return new ShortUrl(this.originalUrl, shortKey, this.expiresAt);
+        return new ShortUrl(this.originalUrl, shortKey, this.expiresAt, this.clickCount, this.active);
     }
 }
