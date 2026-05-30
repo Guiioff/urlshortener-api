@@ -6,7 +6,6 @@ import com.devgui.urlshortener.domain.model.ShortUrl;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.time.ZoneOffset;
 import java.util.UUID;
 
 @Component
@@ -16,9 +15,7 @@ public class ShortUrlMapper {
         if (dto == null) return null;
 
         String originalUrl = dto.originalUrl();
-        Instant expiresAt = dto.expiresAt() != null
-                ? dto.expiresAt().toInstant(ZoneOffset.UTC)
-                : null;
+        Instant expiresAt = dto.expiresAt();
 
         return new ShortUrl(originalUrl, expiresAt);
     }

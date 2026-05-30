@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record ShortUrlRequest(
         @NotBlank(message = "Original URL is required.")
@@ -12,6 +12,6 @@ public record ShortUrlRequest(
         String originalUrl,
 
         @Future(message = "Expiration date must be in the future.")
-        LocalDateTime expiresAt
+        Instant expiresAt
 ) {
 }
