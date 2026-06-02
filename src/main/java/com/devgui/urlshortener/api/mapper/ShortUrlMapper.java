@@ -1,12 +1,15 @@
 package com.devgui.urlshortener.api.mapper;
 
 import com.devgui.urlshortener.api.dto.request.ShortUrlRequest;
+import com.devgui.urlshortener.api.dto.response.PageResponse;
 import com.devgui.urlshortener.api.dto.response.ShortUrlDetailsResponse;
 import com.devgui.urlshortener.api.dto.response.ShortUrlResponse;
 import com.devgui.urlshortener.domain.model.ShortUrl;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -43,6 +46,19 @@ public class ShortUrlMapper {
 
         return new ShortUrlDetailsResponse(
                 id, originalUrl, shortUrl, clickCount, active, expiresAt, createdAt, updatedAt);
+    }
+
+    public PageResponse<ShortUrlResponse> toPageResponse(Page<ShortUrl> shortUrlPage, String baseUrl){
+        List<ShortUrlResponse> shortUrlResponseList = shortUrlPage.getContent()
+                .stream()
+                .map(su -> this.toResponse(su, baseUrl))
+                .toList();
+        Integer page = shortUrlPage.getNumber();
+        Integer size = shortUrlPage.getSize();
+        Integer totalPages = shortUrlPage.getTotalPages();
+        Long totalElements = shortUrlPage.getTotalElements();
+
+        return new PageResponse<ShortUrlResponse>(shortUrlResponseList, page, size, totalPages, totalElements);
     }
 
 }
