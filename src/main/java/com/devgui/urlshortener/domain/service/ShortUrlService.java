@@ -7,6 +7,8 @@ import com.devgui.urlshortener.infrastructure.repository.ShortUrlRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ShortUrlService {
 
@@ -35,6 +37,11 @@ public class ShortUrlService {
 
         ShortUrl updatedUrl = shortUrl.incrementClickCount();
         return shortUrlRepository.save(updatedUrl);
+    }
+
+    public ShortUrl getById(UUID id){
+        return shortUrlRepository.findById(id)
+                .orElseThrow(() -> new ShortUrlNotFoundException("Short URL not found for id: " + id));
     }
 
     private ShortUrl getByShortKey(String shortKey){
