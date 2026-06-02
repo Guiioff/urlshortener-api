@@ -78,4 +78,17 @@ public class ShortUrl {
                 this.expiresAt
         );
     }
+
+    public ShortUrl disable(){
+        return new ShortUrl(
+                this.id,
+                this.originalUrl,
+                this.shortKey,
+                this.clickCount,
+                false,
+                this.createdAt,
+                this.updatedAt,
+                this.expiresAt
+        );
+    }
 }

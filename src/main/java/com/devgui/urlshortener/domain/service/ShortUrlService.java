@@ -52,6 +52,12 @@ public class ShortUrlService {
         return shortUrlRepository.findAll(pageRequest);
     }
 
+    public void disable(UUID id){
+        ShortUrl shortUrl = this.getById(id);
+        ShortUrl updatedUrl = shortUrl.disable();
+        shortUrlRepository.save(updatedUrl);
+    }
+
     private ShortUrl getByShortKey(String shortKey){
         return shortUrlRepository.findByShortKey(shortKey)
                 .orElseThrow(() -> new ShortUrlNotFoundException("Short URL not found for key: " + shortKey));
