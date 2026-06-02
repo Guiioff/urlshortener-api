@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -63,5 +65,11 @@ public class ShortUrlController {
 
         PageResponse<ShortUrlResponse> response = shortUrlMapper.toPageResponse(shortUrlPage, baseUrl);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}/disable")
+    public ResponseEntity<Void> disable(@PathVariable UUID id){
+        shortUrlService.disable(id);
+        return ResponseEntity.noContent().build();
     }
 }
