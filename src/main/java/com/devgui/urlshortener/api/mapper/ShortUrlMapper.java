@@ -1,6 +1,7 @@
 package com.devgui.urlshortener.api.mapper;
 
 import com.devgui.urlshortener.api.dto.request.ShortUrlRequest;
+import com.devgui.urlshortener.api.dto.response.ShortUrlDetailsResponse;
 import com.devgui.urlshortener.api.dto.response.ShortUrlResponse;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import org.springframework.stereotype.Component;
@@ -29,4 +30,19 @@ public class ShortUrlMapper {
 
         return new ShortUrlResponse(id, originalUrl, shortUrl, createdAt, expiresAt);
     }
+
+    public ShortUrlDetailsResponse toDetailsResponse(ShortUrl entity, String baseUrl){
+        UUID id = entity.getId();
+        String originalUrl = entity.getOriginalUrl();
+        String shortUrl = baseUrl + "/" + entity.getShortKey();
+        Integer clickCount = entity.getClickCount();
+        boolean active = entity.isActive();
+        Instant expiresAt = entity.getExpiresAt();
+        Instant createdAt = entity.getCreatedAt();
+        Instant updatedAt = entity.getUpdatedAt();
+
+        return new ShortUrlDetailsResponse(
+                id, originalUrl, shortUrl, clickCount, active, expiresAt, createdAt, updatedAt);
+    }
+
 }
