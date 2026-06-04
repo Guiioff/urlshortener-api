@@ -4,9 +4,13 @@ import com.devgui.urlshortener.api.dto.request.ShortUrlRequest;
 import com.devgui.urlshortener.api.dto.response.PageResponse;
 import com.devgui.urlshortener.api.dto.response.ShortUrlDetailsResponse;
 import com.devgui.urlshortener.api.dto.response.ShortUrlResponse;
+import com.devgui.urlshortener.api.dto.response.UrlAnalyticsResponse;
 import com.devgui.urlshortener.api.mapper.ShortUrlMapper;
+import com.devgui.urlshortener.api.mapper.UrlAccessAnalyticsMapper;
 import com.devgui.urlshortener.domain.model.ShortUrl;
+import com.devgui.urlshortener.domain.model.UrlAccessAnalytics;
 import com.devgui.urlshortener.domain.service.ShortUrlService;
+import com.devgui.urlshortener.domain.service.UrlAccessAnalyticsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,8 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,11 +28,15 @@ import java.util.UUID;
 public class ShortUrlController {
 
     private final ShortUrlService shortUrlService;
+    private final UrlAccessAnalyticsService urlAccessAnalyticsService;
     private final ShortUrlMapper shortUrlMapper;
+    private final UrlAccessAnalyticsMapper urlAccessAnalyticsMapper;
 
-    public ShortUrlController(ShortUrlService shortUrlService, ShortUrlMapper shortUrlMapper) {
+    public ShortUrlController(ShortUrlService shortUrlService, UrlAccessAnalyticsService urlAccessAnalyticsService, ShortUrlMapper shortUrlMapper, UrlAccessAnalyticsMapper urlAccessAnalyticsMapper) {
         this.shortUrlService = shortUrlService;
+        this.urlAccessAnalyticsService = urlAccessAnalyticsService;
         this.shortUrlMapper = shortUrlMapper;
+        this.urlAccessAnalyticsMapper = urlAccessAnalyticsMapper;
     }
 
     @PostMapping
@@ -71,5 +78,13 @@ public class ShortUrlController {
     public ResponseEntity<Void> disable(@PathVariable UUID id){
         shortUrlService.disable(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/analytics")
+    public ResponseEntity<UrlAnalyticsResponse> analytics(@PathVariable UUID id){
+        ShortUrl shortUrl = shortUrlService.getById(id);
+        List<UrlAccessAnalytics> urlAccessAnalyticsList = urlAccessAnalyticsService.getAnalytics(shortUrl.getId());
+        UrlAnalyticsResponse response = urlAccessAnalyticsMapper.toResponse(shortUrl, urlAccessAnalyticsList);
+        return ResponseEntity.ok(response);
     }
 }
