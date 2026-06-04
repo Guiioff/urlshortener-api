@@ -3,11 +3,14 @@ package com.devgui.urlshortener.api.exception;
 import com.devgui.urlshortener.domain.exception.ShortUrlInactiveException;
 import com.devgui.urlshortener.domain.exception.ShortUrlNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.method.MethodValidationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.List;
 
@@ -38,6 +41,26 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(f -> new FieldErrorDetail(f.getField(), f.getDefaultMessage()))
                 .toList();
+        ErrorResponse error = ErrorResponse.of(
+                HttpStatus.BAD_REQUEST, VALIDATION_FAILED_MESSAGE, request.getRequestURI(), details);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(
+            HandlerMethodValidationException e,
+            HttpServletRequest request) {
+
+        List<FieldErrorDetail> details = e.getParameterValidationResults()
+                .stream()
+                .flatMap(result -> result.getResolvableErrors().stream()
+                        .map(error -> new FieldErrorDetail(
+                                result.getMethodParameter().getParameterName(),
+                                error.getDefaultMessage()
+                        )))
+                .toList();
+
         ErrorResponse error = ErrorResponse.of(
                 HttpStatus.BAD_REQUEST, VALIDATION_FAILED_MESSAGE, request.getRequestURI(), details);
 
