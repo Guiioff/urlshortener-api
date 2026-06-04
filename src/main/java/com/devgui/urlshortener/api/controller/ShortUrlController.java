@@ -81,9 +81,14 @@ public class ShortUrlController {
     }
 
     @GetMapping("/{id}/analytics")
-    public ResponseEntity<UrlAnalyticsResponse> analytics(@PathVariable UUID id){
+    public ResponseEntity<UrlAnalyticsResponse> analytics(
+            @PathVariable
+            UUID id,
+            @RequestParam(value = "size", defaultValue = "5", required = false)
+            @Max(value = 10, message = "Size must not exceed 10")
+            Integer size){
         ShortUrl shortUrl = shortUrlService.getById(id);
-        List<UrlAccessAnalytics> urlAccessAnalyticsList = urlAccessAnalyticsService.getAnalytics(shortUrl.getId());
+        List<UrlAccessAnalytics> urlAccessAnalyticsList = urlAccessAnalyticsService.getAnalytics(shortUrl.getId(), size);
         UrlAnalyticsResponse response = urlAccessAnalyticsMapper.toResponse(shortUrl, urlAccessAnalyticsList);
         return ResponseEntity.ok(response);
     }

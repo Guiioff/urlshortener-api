@@ -24,8 +24,8 @@ public class UrlAccessAnalyticsService {
         urlAccessAnalyticsRepository.save(urlAccessAnalytics);
     }
 
-    public List<UrlAccessAnalytics> getAnalytics(UUID shortUrlId){
-        Pageable pageable = PageRequest.of(0, 5);
+    public List<UrlAccessAnalytics> getAnalytics(UUID shortUrlId, Integer size){
+        Pageable pageable = PageRequest.of(0, size);
         return urlAccessAnalyticsRepository.findRecentAccessesByShortUrlId(shortUrlId, pageable);
     }
 }
