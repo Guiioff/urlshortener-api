@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ShortUrl {
+public class ShortUrl implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
