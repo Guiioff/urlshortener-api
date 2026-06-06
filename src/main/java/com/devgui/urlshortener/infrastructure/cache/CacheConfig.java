@@ -1,4 +1,4 @@
-package com.devgui.urlshortener.infrastructure.redis;
+package com.devgui.urlshortener.infrastructure.cache;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import java.time.Duration;
 
 @Configuration
-public class RedisConfig {
+public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
