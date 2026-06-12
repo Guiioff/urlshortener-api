@@ -1,9 +1,9 @@
-package com.devgui.urlshortener.api.mapper;
+package com.devgui.urlshortener.api.v1.mapper;
 
-import com.devgui.urlshortener.api.dto.request.ShortUrlRequest;
-import com.devgui.urlshortener.api.dto.response.PageResponse;
-import com.devgui.urlshortener.api.dto.response.ShortUrlDetailsResponse;
-import com.devgui.urlshortener.api.dto.response.ShortUrlResponse;
+import com.devgui.urlshortener.api.v1.dto.request.ShortUrlRequest;
+import com.devgui.urlshortener.api.v1.dto.response.PageResponse;
+import com.devgui.urlshortener.api.v1.dto.response.ShortUrlDetailsResponse;
+import com.devgui.urlshortener.api.v1.dto.response.ShortUrlResponse;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;

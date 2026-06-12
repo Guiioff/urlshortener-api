@@ -1,6 +1,6 @@
 package com.devgui.urlshortener.infrastructure.ratelimiter;
 
-import com.devgui.urlshortener.api.exception.ErrorResponse;
+import com.devgui.urlshortener.api.v1.exception.ErrorResponse;
 import tools.jackson.databind.ObjectMapper;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;

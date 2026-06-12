@@ -1,12 +1,10 @@
-package com.devgui.urlshortener.api.exception;
+package com.devgui.urlshortener.api.v1.exception;
 
 import com.devgui.urlshortener.domain.exception.ShortUrlInactiveException;
 import com.devgui.urlshortener.domain.exception.ShortUrlNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.method.MethodValidationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -1,4 +1,4 @@
-package com.devgui.urlshortener.api.controller;
+package com.devgui.urlshortener.api.v1.controller;
 
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.domain.service.ShortUrlService;

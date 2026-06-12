@@ -1,12 +1,12 @@
-package com.devgui.urlshortener.api.controller;
+package com.devgui.urlshortener.api.v1.controller;
 
-import com.devgui.urlshortener.api.dto.request.ShortUrlRequest;
-import com.devgui.urlshortener.api.dto.response.PageResponse;
-import com.devgui.urlshortener.api.dto.response.ShortUrlDetailsResponse;
-import com.devgui.urlshortener.api.dto.response.ShortUrlResponse;
-import com.devgui.urlshortener.api.dto.response.UrlAnalyticsResponse;
-import com.devgui.urlshortener.api.mapper.ShortUrlMapper;
-import com.devgui.urlshortener.api.mapper.UrlAccessAnalyticsMapper;
+import com.devgui.urlshortener.api.v1.dto.request.ShortUrlRequest;
+import com.devgui.urlshortener.api.v1.dto.response.PageResponse;
+import com.devgui.urlshortener.api.v1.dto.response.ShortUrlDetailsResponse;
+import com.devgui.urlshortener.api.v1.dto.response.ShortUrlResponse;
+import com.devgui.urlshortener.api.v1.dto.response.UrlAnalyticsResponse;
+import com.devgui.urlshortener.api.v1.mapper.ShortUrlMapper;
+import com.devgui.urlshortener.api.v1.mapper.UrlAccessAnalyticsMapper;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.domain.model.UrlAccessAnalytics;
 import com.devgui.urlshortener.domain.service.ShortUrlService;

@@ -1,4 +1,4 @@
-package com.devgui.urlshortener.api.exception;
+package com.devgui.urlshortener.api.v1.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;

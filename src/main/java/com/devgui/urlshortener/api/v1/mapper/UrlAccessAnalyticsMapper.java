@@ -1,7 +1,7 @@
-package com.devgui.urlshortener.api.mapper;
+package com.devgui.urlshortener.api.v1.mapper;
 
-import com.devgui.urlshortener.api.dto.response.RecentClickResponse;
-import com.devgui.urlshortener.api.dto.response.UrlAnalyticsResponse;
+import com.devgui.urlshortener.api.v1.dto.response.RecentClickResponse;
+import com.devgui.urlshortener.api.v1.dto.response.UrlAnalyticsResponse;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.domain.model.UrlAccessAnalytics;
 import org.springframework.stereotype.Component;

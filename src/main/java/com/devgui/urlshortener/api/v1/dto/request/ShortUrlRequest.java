@@ -1,4 +1,4 @@
-package com.devgui.urlshortener.api.dto.request;
+package com.devgui.urlshortener.api.v1.dto.request;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
