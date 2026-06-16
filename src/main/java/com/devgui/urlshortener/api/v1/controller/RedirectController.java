@@ -1,5 +1,6 @@
 package com.devgui.urlshortener.api.v1.controller;
 
+import com.devgui.urlshortener.api.v1.doc.RedirectControllerDoc;
 import com.devgui.urlshortener.domain.model.ShortUrl;
 import com.devgui.urlshortener.domain.service.ShortUrlService;
 import com.devgui.urlshortener.domain.service.UrlAccessAnalyticsService;
@@ -15,7 +16,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping
-public class RedirectController {
+public class RedirectController implements RedirectControllerDoc {
 
     private final ShortUrlService shortUrlService;
     private final UrlAccessAnalyticsService urlAccessAnalyticsService;
