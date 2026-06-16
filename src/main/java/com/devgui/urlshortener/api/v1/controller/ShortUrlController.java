@@ -1,5 +1,6 @@
 package com.devgui.urlshortener.api.v1.controller;
 
+import com.devgui.urlshortener.api.v1.doc.ShortUrlControllerDoc;
 import com.devgui.urlshortener.api.v1.dto.request.ShortUrlRequest;
 import com.devgui.urlshortener.api.v1.dto.response.PageResponse;
 import com.devgui.urlshortener.api.v1.dto.response.ShortUrlDetailsResponse;
@@ -25,7 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/urls")
-public class ShortUrlController {
+public class ShortUrlController implements ShortUrlControllerDoc {
 
     private final ShortUrlService shortUrlService;
     private final UrlAccessAnalyticsService urlAccessAnalyticsService;
@@ -61,10 +62,8 @@ public class ShortUrlController {
     @GetMapping
     public ResponseEntity<PageResponse<ShortUrlResponse>> getAll(
             @RequestParam(value = "page", defaultValue = "0", required = false)
-            @Min(value = 0, message = "Page must be greater than or equal to 0")
             Integer page,
             @RequestParam(value = "size", defaultValue = "5", required = false)
-            @Max(value = 20, message = "Size must not exceed 20")
             Integer size
     ){
         Page<ShortUrl> shortUrlPage = shortUrlService.getAll(page, size);
@@ -85,7 +84,6 @@ public class ShortUrlController {
             @PathVariable
             UUID id,
             @RequestParam(value = "size", defaultValue = "5", required = false)
-            @Max(value = 10, message = "Size must not exceed 10")
             Integer size){
         ShortUrl shortUrl = shortUrlService.getById(id);
         List<UrlAccessAnalytics> urlAccessAnalyticsList = urlAccessAnalyticsService.getAnalytics(shortUrl.getId(), size);
